@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Secure Location Tracker</title>
+  <script>
+    async function sendLocation() {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(async function (position) {
+          const data = {
+            lat: position.coords.latitude,
+            lon: position.coords.longitude
+          };
+          await fetch("https://your-backend-url.onrender.com/location", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+          });
+          alert("📍 Location sent to Telegram!");
+        });
+      } else {
+        alert("❌ Geolocation not supported.");
+      }
+    }
+  </script>
+</head>
+<body>
+  <h2>📡 Click to Share Location</h2>
+  <button onclick="sendLocation()">Send Location</button>
+</body>
+</html>
